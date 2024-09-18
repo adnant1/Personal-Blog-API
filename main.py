@@ -126,36 +126,6 @@ def get_single_user(current_user, public_id):
     return jsonify({"error": "user not found"}), 404
 
 
-#Create a user
-@app.route('/user', methods=["POST"])
-@token_required
-def create_user(current_user):
-
-    #Check if the user is an admin
-    if not current_user.admin:
-        #403 is the status code for forbidden
-        return({"error": "user not authorized."}), 403
-
-    data = request.get_json()
-
-    #Hash the password, this method is the default method
-    hashed_password = generate_password_hash(data['password'], method="pbkdf2:sha256")
-
-    #Create new user
-    #UUID4 creates a UUID based on random numbers
-    new_user = User(
-        public_id = str(uuid.uuid4()),
-        name = data["name"],
-        password = hashed_password
-    )
-
-    #add the user to the db
-    db.session.add(new_user)
-    db.session.commit()
-
-    return jsonify({"message": "new user created successfully"}), 201
-
-
 #Promote a user to admin
 @app.route('/user/<public_id>', methods=["PUT"])
 @token_required
@@ -194,6 +164,30 @@ def delete_user(current_user, public_id):
         return jsonify({"message": "user deleted successfully"}), 200
 
     return jsonify({"error": "user not found"}), 404
+
+
+#User sign up
+@app.route("/signup", methods=["POST"])
+def signup():
+
+    data = request.get_json()
+
+    #Hash the password, this method is the default method
+    hashed_password = generate_password_hash(data['password'], method="pbkdf2:sha256")
+
+    #Create new user
+    #UUID4 creates a UUID based on random numbers
+    new_user = User(
+        public_id = str(uuid.uuid4()),
+        name = data["name"],
+        password = hashed_password
+    )
+
+    #add the user to the db
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "signed up successfully"}), 201
 
 
 #User login
