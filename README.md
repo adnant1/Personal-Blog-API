@@ -47,7 +47,7 @@ This is a RESTful API built using Flask, Python, and MySQL that allows users to 
 
 ## Authentication
 
-The API uses **JWT (JSON Web Token)** for authentication. To access certain routes (e.g., creating, updating, or deleting blogs), you must include a valid token in the `Authorization` header of the request.
+The API uses **JWT (JSON Web Token)** for authentication. To access certain routes (e.g., creating, updating, or deleting blogs), you must include a valid token in the `x-access-token` header of the request.
 
 - **Register**: Users can sign up with a username and password.
 - **Login**: Users can log in with their username and password to receive a JWT token.
