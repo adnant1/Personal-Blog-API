@@ -5,13 +5,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timezone, timedelta
 from functools import wraps
+import os
 
 #Create flask instance
 app = Flask(__name__)
 
 #Configure secret key
-#Fix later before making repo public
-app.config["SECRET_KEY"] = 'flint346297'
+app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 
 #Configure SQLAlchemy
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+mysqlconnector://root:Flint346297@localhost/blog_db'
