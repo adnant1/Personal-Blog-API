@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 
 #Configure SQLAlchemy
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+mysqlconnector://root:Flint346297@localhost/blog_db'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+mysqlconnector://root:" + os.environ.get('SQL_KEY') + "@localhost/blog_db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
